@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
 import java.util.*;
 
@@ -36,7 +35,7 @@ public class FacultyService {
     }
 
     public Collection<Faculty> findByColor(String color) {
-        ArrayList<Faculty> result = new ArrayList<>();
+        List<Faculty> result = new ArrayList<>();
         for (Faculty faculty : faculties.values()) {
             if (Objects.equals(faculty.getColor(), color)) {
                 result.add(faculty);

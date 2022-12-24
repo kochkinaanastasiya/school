@@ -39,7 +39,7 @@ public class FacultyController {
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty getFaculty = facultyService.editFaculty(faculty.getId(), faculty);
         if(getFaculty == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(getFaculty);
     }
@@ -51,11 +51,7 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
-        if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findByColor(color));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
+    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam String color) {
+        return ResponseEntity.ok(facultyService.findByColor(color));
     }
-
 }

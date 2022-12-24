@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Student;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -36,7 +37,7 @@ public class StudentService {
 
     // Service
     public Collection<Student> findByAge(int age) {
-        ArrayList<Student> result = new ArrayList<>();
+        List<Student> result = new ArrayList<>();
         for (Student student : students.values()) {
             if (student.getAge() == age) {
                 result.add(student);
