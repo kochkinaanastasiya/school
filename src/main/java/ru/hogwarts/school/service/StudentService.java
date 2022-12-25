@@ -1,48 +1,45 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 
 @Service
 public class StudentService {
-    private final HashMap<Long, Student> students = new HashMap<>();
-    private long count = 0;
 
-    public Student addStudent (Student student) {
-        student.setId(count++);
-        students.put(student.getId(), student);
-        return student;
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
-    public Student getStudent(long id) {
-        return students.get(id);
+    public Student addStudent(Student student) {
+        student.setId(null);
+        return studentRepository.save(student);
+    }
+
+    public Student read(long id) {
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     public Student editStudent(long id, Student student) {
-        if(!students.containsKey(id)){
-            return null;
-        }
-        students.put(id, student);
-        return student;
+        Student oldStudent = read(id);
+        oldStudent.setName(student.getName());
+        oldStudent.setAge(student.getAge());
+        return studentRepository.save(oldStudent);
     }
 
     public Student deleteStudent(long id) {
-        return students.remove(id);
+        Student student = read(id);
+        studentRepository.delete(student);
+        return student;
     }
 
     // Service
     public Collection<Student> findByAge(int age) {
-        List<Student> result = new ArrayList<>();
-        for (Student student : students.values()) {
-            if (student.getAge() == age) {
-                result.add(student);
-            }
-        }
-        return result;
+        return studentRepository.findByAge(age);
     }
 }
