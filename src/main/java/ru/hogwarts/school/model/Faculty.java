@@ -6,9 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "faculties")
 public class Faculty {
-
     public Faculty() {
-
     }
 
     @Id
@@ -25,12 +23,6 @@ public class Faculty {
         this.id = id;
     }
 
-
-    public Faculty(Long id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-    }
     public String getName() {
         return name;
     }
@@ -47,25 +39,4 @@ public class Faculty {
         this.color = color;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Faculty faculty = (Faculty) o;
-        return Objects.equals(getId(), faculty.getId()) && Objects.equals(getName(), faculty.getName()) && Objects.equals(getColor(), faculty.getColor());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getColor());
-    }
-
-    @Override
-    public String toString() {
-        return "Faculty{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                '}';
-    }
 }
