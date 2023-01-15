@@ -37,14 +37,14 @@ public class FacultyController {
     public Faculty deleteFaculty(@PathVariable Long id){
         return facultyService.deleteFaculty(id);
     }
-    @GetMapping
+    @GetMapping(params = "!colorOrName")
     public Collection<Faculty> findByColor(@RequestParam String color) {
         return facultyService.findByColor(color);
     }
 
     @GetMapping(params = "colorOrName")
-    public Collection<Faculty> findColorOrName(@RequestParam String color, @RequestParam String name) {
-        return facultyService.findByColorOrName(color, name);
+    public Collection<Faculty> findByColorOrName(@RequestParam String colorOrName) {
+        return facultyService.findByColorOrName(colorOrName);
     }
 
     @GetMapping("/{id}/students")
