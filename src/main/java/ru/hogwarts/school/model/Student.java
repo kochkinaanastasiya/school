@@ -17,6 +17,9 @@ public class Student {
 
     @ManyToOne
     private Faculty faculty;
+
+    @OneToOne
+    private Avatar avatar;
     public Long getId() {
         return id;
     }
@@ -43,5 +46,13 @@ public class Student {
 
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
     }
 }

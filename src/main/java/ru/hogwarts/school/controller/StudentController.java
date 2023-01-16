@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -43,7 +44,7 @@ public class StudentController {
         return studentService.findByAge(age);
     }
 
-    @GetMapping(params = "{minAge, maxAge}")
+    @GetMapping(params = {"minAge", "maxAge"})
     public Collection<Student> findByAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
         return studentService.findByAgeBetween(minAge, maxAge);
     }
@@ -52,5 +53,18 @@ public class StudentController {
     public Faculty getFacultyByStudent(@PathVariable long id) {
         return studentService.getFacultyByStudent(id);
     }
+
+    @PatchMapping
+    public Student patchStudentAvatar (@PathVariable long id, @RequestParam("avatarId") long avatarId) throws AvatarNotFoundException {
+        return studentService.patchStudentAvatar(id, avatarId);
+    }
+
+
+
+
+
+
+
+
 }
 
