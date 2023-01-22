@@ -23,7 +23,7 @@ public class StudentService {
         this.avatarRepository = avatarRepository;
     }
 
-    public Student addStudent(Student student) {
+    public Student createStudent(Student student) {
         student.setId(null);
         return studentRepository.save(student);
     }

@@ -15,6 +15,19 @@ public class Student {
     private String name;
     private int age;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return getAge() == student.getAge() && Objects.equals(getId(), student.getId()) && Objects.equals(getName(), student.getName()) && Objects.equals(getFaculty(), student.getFaculty()) && Objects.equals(getAvatar(), student.getAvatar());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getAge(), getFaculty(), getAvatar());
+    }
+
     @ManyToOne
     private Faculty faculty;
 
@@ -54,5 +67,20 @@ public class Student {
 
     public Avatar getAvatar() {
         return avatar;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", faculty=" + faculty +
+                ", avatar=" + avatar +
+                '}';
     }
 }
