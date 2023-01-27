@@ -36,6 +36,7 @@ public class StudentService {
         Student oldStudent = read(id);
         oldStudent.setName(student.getName());
         oldStudent.setAge(student.getAge());
+        oldStudent.setFaculty(student.getFaculty());
         return studentRepository.save(oldStudent);
     }
 
@@ -71,15 +72,17 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Long getAllStudentsOfAmount(){
+        return studentRepository.getAllStudentsOfAmount();
+    }
 
+    public Long getAverageAgeStudents(){
+        return studentRepository.getAverageAgeStudents();
+    }
 
-
-
-
-
-
-
-
+    public Long getLastFiveStudents(){
+        return studentRepository.getLastFiveStudents();
+    }
 
 
 
