@@ -72,15 +72,17 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Long getAllStudentsOfAmount(){
+        return studentRepository.getAllStudentsOfAmount();
+    }
 
+    public Long getAverageAgeStudents(){
+        return studentRepository.getAverageAgeStudents();
+    }
 
-
-
-
-
-
-
-
+    public Long getLastFiveStudents(){
+        return studentRepository.getLastFiveStudents();
+    }
 
 
 
