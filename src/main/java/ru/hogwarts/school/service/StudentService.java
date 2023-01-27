@@ -36,6 +36,7 @@ public class StudentService {
         Student oldStudent = read(id);
         oldStudent.setName(student.getName());
         oldStudent.setAge(student.getAge());
+        oldStudent.setFaculty(student.getFaculty());
         return studentRepository.save(oldStudent);
     }
 

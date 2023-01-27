@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.FacultyService;
 import java.nio.charset.StandardCharsets;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,6 +36,9 @@ public class FacultyControllerTest {
     @MockBean
     private FacultyRepository facultyRepository;
 
+    @MockBean
+    private StudentRepository studentRepository;
+
     @SpyBean
     private FacultyService facultyService;
 
@@ -48,7 +52,7 @@ public class FacultyControllerTest {
         when(facultyRepository.save(any())).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/faculties")
+                        .post("/faculty")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(faculty)))
                 .andExpect(result -> {

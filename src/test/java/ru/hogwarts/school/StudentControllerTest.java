@@ -12,6 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
@@ -28,28 +29,32 @@ public class StudentControllerTest {
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private StudentRepository studentRepository;
+//    @Autowired
+//    private StudentRepository studentRepository;
+
+//    @Autowired
+//    private FacultyRepository facultyRepository;
 
     @Autowired
-    private FacultyRepository facultyRepository;
+    private StudentController studentController;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     private final Faker faker = new Faker();
 
-    @AfterEach
-    public void afterEachDelete(){
-        studentRepository.deleteAll();
-        facultyRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void afterEachDelete(){
+//        studentRepository.deleteAll();
+//        facultyRepository.deleteAll();
+//    }
 
     @Test
     public void createStudentTest(){
-        createStudent(generateStudent(createFaculty(generateFaculty())));
+        createStudentTest(generateStudent(createFaculty(generateFaculty())));
 
     }
+
 
     private Faculty createFaculty(Faculty faculty){
         ResponseEntity<Faculty> facultyResponseEntity = testRestTemplate.postForEntity("http://localhost:" + port + "/faculty", faculty, Faculty.class);
@@ -65,11 +70,11 @@ public class StudentControllerTest {
     }
 
     @Test
-    public Student createStudent(Student student){
+    public Student createStudentTest(Student student){
         ResponseEntity<Student> studentResponseEntity = testRestTemplate.postForEntity("http://localhost:" + port + "/student/", student, Student.class);
         assertThat(studentResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(studentResponseEntity.getBody()).isNotNull();
-        assertThat(studentResponseEntity.getBody()).usingRecursiveComparison().ignoringFields("id").isEqualTo(studentRepository);
+        assertThat(studentResponseEntity.getBody()).usingRecursiveComparison().ignoringFields("id").isEqualTo(student);
         assertThat(studentResponseEntity.getBody().getId()).isNotNull();
 
         System.out.println(studentResponseEntity.getBody().getName());
@@ -80,7 +85,7 @@ public class StudentControllerTest {
     public void editStudentTest(){
         Faculty faculty1 = createFaculty(generateFaculty());
         Faculty faculty2 = createFaculty(generateFaculty());
-        Student student = createStudent(generateStudent(faculty1));
+        Student student = createStudentTest(generateStudent(faculty1));
 
         ResponseEntity<Student> getForEntityResponse = testRestTemplate.getForEntity("http://localhost:" + port + "/student/" + student.getId(), Student.class);
         assertThat(getForEntityResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -105,7 +110,7 @@ public class StudentControllerTest {
                 .toList();
         List <Student> students = Stream.generate(()-> generateStudent(faculties.get(faker.random().nextInt(faculties.size()))))
                 .limit(50)
-                .map(this::createStudent)
+                .map(this::createStudentTest)
                 .toList();
 
         int minAge = 13;
