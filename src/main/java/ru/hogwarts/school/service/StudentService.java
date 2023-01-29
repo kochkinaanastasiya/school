@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,7 +81,7 @@ public class StudentService {
         return studentRepository.getAverageAgeStudents();
     }
 
-    public Long getLastFiveStudents(){
+    public List<Student> getLastFiveStudents(){
         return studentRepository.getLastFiveStudents();
     }
 
