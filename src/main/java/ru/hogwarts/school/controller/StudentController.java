@@ -56,13 +56,5 @@ public class StudentController {
     public Student patchStudentAvatar (@PathVariable long id, @RequestParam("avatarId") long avatarId) throws AvatarNotFoundException {
         return studentService.patchStudentAvatar(id, avatarId);
     }
-
-
-
-
-
-
-
-
 }
 

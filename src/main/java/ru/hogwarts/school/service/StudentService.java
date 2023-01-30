@@ -84,7 +84,4 @@ public class StudentService {
     public List<Student> getLastFiveStudents(){
         return studentRepository.getLastFiveStudents();
     }
-
-
-
 }
