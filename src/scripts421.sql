@@ -5,13 +5,10 @@ ALTER TABLE student
     ADD CONSTRAINT name_unique UNIQUE (name);
 
 ALTER TABLE student
-    ALTER COLUMN name SET NOT NULL;
-
-ALTER TABLE student
-    ADD PRIMARY KEY (name);
+    ALTER name SET NOT NULL;
 
 ALTER TABLE faculties
     ADD CONSTRAINT color_name_unique UNIQUE (color, name);
 
 ALTER TABLE student
-    ALTER age SET DEFAULT 20;
+    ALTER COLUMN age SET DEFAULT 20;
