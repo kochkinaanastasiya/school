@@ -1,7 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -21,7 +19,7 @@ public class StudentController {
 
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+        return studentService.createStudent(student);
     }
 
     @GetMapping("{id}")
@@ -58,13 +56,5 @@ public class StudentController {
     public Student patchStudentAvatar (@PathVariable long id, @RequestParam("avatarId") long avatarId) throws AvatarNotFoundException {
         return studentService.patchStudentAvatar(id, avatarId);
     }
-
-
-
-
-
-
-
-
 }
 

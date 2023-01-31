@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class StudentService {
         this.avatarRepository = avatarRepository;
     }
 
-    public Student addStudent(Student student) {
+    public Student createStudent(Student student) {
         student.setId(null);
         return studentRepository.save(student);
     }
@@ -36,6 +37,7 @@ public class StudentService {
         Student oldStudent = read(id);
         oldStudent.setName(student.getName());
         oldStudent.setAge(student.getAge());
+        oldStudent.setFaculty(student.getFaculty());
         return studentRepository.save(oldStudent);
     }
 
@@ -71,16 +73,15 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Long getAllStudentsOfAmount(){
+        return studentRepository.getAllStudentsOfAmount();
+    }
 
+    public Long getAverageAgeStudents(){
+        return studentRepository.getAverageAgeStudents();
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public List<Student> getLastFiveStudents(){
+        return studentRepository.getLastFiveStudents();
+    }
 }

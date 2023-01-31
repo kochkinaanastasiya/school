@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.service.AvatarService;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public class AvatarController {
 
@@ -33,6 +35,11 @@ public class AvatarController {
     @GetMapping("/{id}/from-fs")
     public ResponseEntity<byte[]> readAvatarFromFs(@PathVariable long id) throws IOException{
         return readAvatar(avatarService.readAvatarFromFs(id));
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Collection<Avatar>> getAll(@RequestParam Integer pageNumber, @RequestParam Integer pageSize){
+        return avatarService.getAll(pageNumber, pageSize);
     }
 
     private ResponseEntity<byte[]> readAvatar(Pair<String, byte[]> pair){
