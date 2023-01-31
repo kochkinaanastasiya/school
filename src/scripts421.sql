@@ -5,7 +5,7 @@ ALTER TABLE student
     ADD CONSTRAINT name_unique UNIQUE (name);
 
 ALTER TABLE student
-    ALTER name SET NOT NULL;
+    ALTER COLUMN name SET NOT NULL;
 
 ALTER TABLE faculties
     ADD CONSTRAINT color_name_unique UNIQUE (color, name);
