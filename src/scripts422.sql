@@ -1,3 +1,11 @@
+CREATE TABLE cars
+(
+    id INTEGER PRIMARY KEY,
+    brand VARCHAR,
+    model VARCHAR,
+    cost INTEGER
+);
+
 CREATE TABLE users
 (
     id INTEGER PRIMARY KEY,
@@ -5,12 +13,4 @@ CREATE TABLE users
     age INTEGER,
     license BOOLEAN,
     car_id INTEGER REFERENCES cars(id)
-);
-
-CREATE TABLE cars
-(
-    id INTEGER PRIMARY KEY,
-    brand VARCHAR,
-    model VARCHAR,
-    cost INTEGER
 );

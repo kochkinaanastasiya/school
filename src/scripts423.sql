@@ -1,7 +1,7 @@
-SELECT stubent.name, student.age, faculty.name,
+SELECT student.name, student.age, faculties.name,
 FROM student
-         INNER JOIN faculties ON student.faculties_id = faculties.id;
+         LEFT JOIN faculties ON student.faculties_id = faculties.id;
 
-SELECT stubent.name, student.age,
+SELECT student.name, student.age,
 FROM student
-         INNER JOIN avatar a ON student.id = a.student.id;
+         INNER JOIN avatar ON student.avatar_id = avatar_id;
