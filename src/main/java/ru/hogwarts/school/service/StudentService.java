@@ -73,6 +73,10 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public List<Student> getStudentByName(String name){
+        return studentRepository.getStudentByName(name);
+    }
+
     public Long getAllStudentsOfAmount(){
         return studentRepository.getAllStudentsOfAmount();
     }

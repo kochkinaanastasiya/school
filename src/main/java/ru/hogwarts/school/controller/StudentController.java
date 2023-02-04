@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -7,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RequestMapping("/student")
 @RestController
@@ -45,6 +47,12 @@ public class StudentController {
     @GetMapping(params = {"minAge", "maxAge"})
     public Collection<Student> findByAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
         return studentService.findByAgeBetween(minAge, maxAge);
+    }
+
+    @GetMapping("/student/name/{name}")
+    public ResponseEntity<List<Student>> getStudentByName(@PathVariable ("name") String name){
+        List<Student> students = studentService.getStudentByName(name);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("/{id}/faculty")
