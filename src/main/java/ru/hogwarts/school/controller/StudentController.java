@@ -49,8 +49,10 @@ public class StudentController {
         return studentService.findByAgeBetween(minAge, maxAge);
     }
 
-    @GetMapping("/student/name/{name}")
-    public ResponseEntity<List<Student>> getStudentByName(@PathVariable ("name") String name){
+    //@GetMapping("/student/name/{name}")
+    //public ResponseEntity<List<Student>> getStudentByName(@PathVariable ("name") String name){
+    @GetMapping("/student")
+    public ResponseEntity<List<Student>> getStudentByName(@RequestParam ("name") String name){
         List<Student> students = studentService.getStudentByName(name);
         return ResponseEntity.ok(students);
     }
