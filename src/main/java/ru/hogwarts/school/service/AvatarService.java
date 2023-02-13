@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.util.Pair;
@@ -25,6 +27,8 @@ public class AvatarService {
     @Value("${application.avatar.store}")
     private String folderForAvatars;
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
     }
@@ -39,6 +43,7 @@ public class AvatarService {
         Path path = Paths.get(folderForAvatars).resolve(avatar.getId() + extension);
         Files.write(path, data);
         avatar.setFilePath(path.toString());
+        logger.info("Was invoked method for upload avatar");
         avatarRepository.save(avatar);
     }
 
@@ -47,16 +52,19 @@ public class AvatarService {
         avatar.setData(data);
         avatar.setFileSize(size);
         avatar.setMediaType(contentType);
+        logger.info("Was invoked method for create avatar");
         return avatarRepository.save(avatar);
     }
 
     public Pair<String,byte[]> readAvatarFromDb(long id) {
         Avatar avatar = avatarRepository.findByStudentId(id).orElseThrow(()-> new AvatarNotFoundException(id));
+        logger.error("There is not avatar with id = " + id);
         return Pair.of(avatar.getMediaType(), avatar.getData());
     }
 
     public Pair<String,byte[]> readAvatarFromFs(long id) throws IOException{
         Avatar avatar = avatarRepository.findByStudentId(id).orElseThrow(()-> new AvatarNotFoundException(id));
+        logger.error("There is not avatar with id = " + id);
         return Pair.of(avatar.getMediaType(), Files.readAllBytes(Paths.get(avatar.getFilePath())));
     }
 
@@ -64,8 +72,10 @@ public class AvatarService {
         PageRequest pageRequest = PageRequest.of(pageNumber -1, pageSize);
         Collection<Avatar> avatarsList = avatarRepository.findAll(pageRequest).getContent();
         if(avatarsList.isEmpty()){
+            logger.debug("Avatar is empty");
             return ResponseEntity.notFound().build();
         }
+        logger.info("Returned collection of avatars");
         return ResponseEntity.ok(avatarsList);
     }
 }

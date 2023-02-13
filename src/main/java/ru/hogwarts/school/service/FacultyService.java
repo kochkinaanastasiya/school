@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -15,6 +17,8 @@ public class FacultyService {
     private final FacultyRepository facultyRepository;
     private final StudentRepository studentRepository;
 
+    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+
     public FacultyService(FacultyRepository facultyRepository, StudentRepository studentRepository) {
         this.facultyRepository = facultyRepository;
         this.studentRepository = studentRepository;
@@ -22,10 +26,12 @@ public class FacultyService {
 
     public Faculty addFaculty (Faculty faculty) {
         faculty.setId(null);
+        logger.info("Was invoked method for add faculty");
         return facultyRepository.save(faculty);
     }
 
     public Faculty read (long id) {
+        logger.error("There is not faculty with id = " + id);
         return facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
     }
 
@@ -33,12 +39,14 @@ public class FacultyService {
         Faculty oldFaculty = read(id);
         oldFaculty.setName(faculty.getName());
         oldFaculty.setColor(faculty.getColor());
+        logger.info("Was invoked method for edit faculty");
         return facultyRepository.save(oldFaculty);
     }
 
     public Faculty deleteFaculty(long id) {
         Faculty faculty = read(id);
         facultyRepository.delete(faculty);
+        logger.info("Was invoked method for delete faculty");
         return faculty;
     }
 
