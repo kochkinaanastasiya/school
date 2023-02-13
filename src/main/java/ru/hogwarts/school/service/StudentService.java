@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.exception.StudentNotFoundException;
@@ -19,6 +21,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -26,10 +30,12 @@ public class StudentService {
 
     public Student createStudent(Student student) {
         student.setId(null);
+        logger.info("Was invoked method for create student");
         return studentRepository.save(student);
     }
 
     public Student read(long id) {
+        logger.error("There is not student with id = " + id);
         return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
@@ -38,12 +44,14 @@ public class StudentService {
         oldStudent.setName(student.getName());
         oldStudent.setAge(student.getAge());
         oldStudent.setFaculty(student.getFaculty());
+        logger.info("Was invoked method for edit student");
         return studentRepository.save(oldStudent);
     }
 
     public Student deleteStudent(long id) {
         Student student = read(id);
         studentRepository.delete(student);
+        logger.info("Was invoked method for delete student");
         return student;
     }
 
@@ -63,13 +71,16 @@ public class StudentService {
         Optional<Student> optionalStudent = studentRepository.findById(id);
         Optional<Avatar> optionalAvatar = avatarRepository.findById(avatarId);
         if(optionalStudent.isEmpty()){
+            logger.debug("Student is empty");
             throw new StudentNotFoundException(id);
         }
         if(optionalAvatar.isEmpty()){
+            logger.debug("Avatar is empty");
             throw new AvatarNotFoundException(avatarId);
         }
         Student student = optionalStudent.get();
         student.setAvatar(optionalAvatar.get());
+        logger.info("Student with avatars added");
         return studentRepository.save(student);
     }
 
