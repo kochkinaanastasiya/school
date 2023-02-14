@@ -2,6 +2,8 @@ package ru.hogwarts.school.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -17,7 +19,7 @@ public class FacultyService {
     private final FacultyRepository facultyRepository;
     private final StudentRepository studentRepository;
 
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     public FacultyService(FacultyRepository facultyRepository, StudentRepository studentRepository) {
         this.facultyRepository = facultyRepository;
@@ -64,4 +66,15 @@ public class FacultyService {
         return studentRepository.findAllByFaculty_Id(faculty.getId());
     }
 
+    public ResponseEntity<String> longestNameFaculty(){
+        String longestName = String.valueOf(facultyRepository
+                .findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length)));
+        if(longestName.isEmpty()){
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(longestName);
+    }
 }

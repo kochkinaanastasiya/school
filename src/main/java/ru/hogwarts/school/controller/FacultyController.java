@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -49,5 +50,10 @@ public class FacultyController {
     @GetMapping("/{id}/students")
     public Collection<Student> getStudentsByFaculty(@PathVariable long id) {
         return facultyService.getStudentsByFaculty(id);
+    }
+
+    @GetMapping("/longestNameFaculty")
+    public ResponseEntity<String> getFacultyWithLongestName(){
+        return facultyService.longestNameFaculty();
     }
 }
