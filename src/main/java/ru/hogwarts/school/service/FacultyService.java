@@ -66,15 +66,12 @@ public class FacultyService {
         return studentRepository.findAllByFaculty_Id(faculty.getId());
     }
 
-    public ResponseEntity<String> longestNameFaculty(){
+    public String longestNameFaculty(){
         String longestName = String.valueOf(facultyRepository
                 .findAll()
                 .stream()
                 .map(Faculty::getName)
                 .max(Comparator.comparing(String::length)));
-        if(longestName.isEmpty()){
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(longestName);
+        return longestName;
     }
 }
