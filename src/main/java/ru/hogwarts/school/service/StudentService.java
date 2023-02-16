@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.S;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -118,4 +119,13 @@ public class StudentService {
                 .orElse(0);
     }
 
+    public void printNames(String name){
+        studentRepository.findAll().stream()
+                .forEach(s -> System.out.println(s.getName()));
+    }
+
+    public synchronized void printSynchronizedNames(String name){
+        studentRepository.findAll().stream()
+                .forEach(s -> System.out.println(s.getName()));
+    }
 }

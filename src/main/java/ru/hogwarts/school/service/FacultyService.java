@@ -66,15 +66,13 @@ public class FacultyService {
         return studentRepository.findAllByFaculty_Id(faculty.getId());
     }
 
-    public ResponseEntity<String> longestNameFaculty(){
-        String longestName = String.valueOf(facultyRepository
+    public String longestNameFaculty(){
+        String longestName = facultyRepository
                 .findAll()
                 .stream()
                 .map(Faculty::getName)
-                .max(Comparator.comparing(String::length)));
-        if(longestName.isEmpty()){
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(longestName);
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(() -> new RuntimeException("Not found faculty with max length"));
+        return longestName;
     }
 }

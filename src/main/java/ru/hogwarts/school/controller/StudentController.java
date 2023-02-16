@@ -73,9 +73,6 @@ public class StudentController {
     @GetMapping("/nameWithA")
     public ResponseEntity<Collection<String>> getStudentsByNameWithA(){
         Collection<String> studentsNameWithA = studentService.getByNameA();
-        if (studentsNameWithA.size() == 0) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
         return ResponseEntity.ok(studentsNameWithA);
     }
 
@@ -84,8 +81,39 @@ public class StudentController {
         return studentService.getAverageAge();
     }
 
+    @GetMapping("/parallel")
+    public void parallelStreams(){
 
+        studentService.printNames("Katya");
+        studentService.printNames("Vika");
 
+        new Thread(() -> {
+            studentService.printNames("Maxim");
+            studentService.printNames("Vasya");
+        }).start();
 
+        new Thread(() -> {
+            studentService.printNames("Nastya");
+            studentService.printNames("Petya");
+        }).start();
+    }
+
+    @GetMapping("/synchronized")
+    public void synchronizedStreams(String name){
+
+        studentService.printSynchronizedNames("Katya");
+        studentService.printSynchronizedNames("Vika");
+
+        new Thread(() -> {
+            studentService.printSynchronizedNames("Maxim");
+            studentService.printSynchronizedNames("Vasya");
+        }).start();
+
+        new Thread(() -> {
+            studentService.printSynchronizedNames("Nastya");
+            studentService.printSynchronizedNames("Petya");
+        }).start();
+    }
 }
+
 
