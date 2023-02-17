@@ -119,13 +119,39 @@ public class StudentService {
                 .orElse(0);
     }
 
-    public void printNames(String name){
-        studentRepository.findAll().stream()
-                .forEach(s -> System.out.println(s.getName()));
+    public void printNames(){
+
+        List<Student> names =studentRepository.findAll();
+
+        System.out.println(names.get(0).getName());
+        System.out.println(names.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println(names.get(2).getName());
+            System.out.println(names.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(names.get(4).getName());
+            System.out.println(names.get(5).getName());
+        }).start();
     }
 
-    public synchronized void printSynchronizedNames(String name){
-        studentRepository.findAll().stream()
-                .forEach(s -> System.out.println(s.getName()));
+    public synchronized void printSynchronizedNames(){
+
+        List<Student> names =studentRepository.findAll();
+
+        System.out.println(names.get(0).getName());
+        System.out.println(names.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println(names.get(2).getName());
+            System.out.println(names.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(names.get(4).getName());
+            System.out.println(names.get(5).getName());
+        }).start();
     }
 }
