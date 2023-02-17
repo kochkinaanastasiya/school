@@ -82,38 +82,12 @@ public class StudentController {
     }
 
     @GetMapping("/parallel")
-    public void parallelStreams(){
-
-        studentService.printNames("Katya");
-        studentService.printNames("Vika");
-
-        new Thread(() -> {
-            studentService.printNames("Maxim");
-            studentService.printNames("Vasya");
-        }).start();
-
-        new Thread(() -> {
-            studentService.printNames("Nastya");
-            studentService.printNames("Petya");
-        }).start();
+    public void parallelStreams() {
+        studentService.printNames();
     }
 
     @GetMapping("/synchronized")
-    public void synchronizedStreams(String name){
-
-        studentService.printSynchronizedNames("Katya");
-        studentService.printSynchronizedNames("Vika");
-
-        new Thread(() -> {
-            studentService.printSynchronizedNames("Maxim");
-            studentService.printSynchronizedNames("Vasya");
-        }).start();
-
-        new Thread(() -> {
-            studentService.printSynchronizedNames("Nastya");
-            studentService.printSynchronizedNames("Petya");
-        }).start();
+    public void synchronizedStreams() {
+        studentService.printSynchronizedNames();
     }
 }
-
-

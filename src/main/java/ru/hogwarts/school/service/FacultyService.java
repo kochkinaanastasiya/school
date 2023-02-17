@@ -67,11 +67,12 @@ public class FacultyService {
     }
 
     public String longestNameFaculty(){
-        String longestName = String.valueOf(facultyRepository
+        String longestName = facultyRepository
                 .findAll()
                 .stream()
                 .map(Faculty::getName)
-                .max(Comparator.comparing(String::length)));
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(() -> new RuntimeException("Not found faculty with max length"));
         return longestName;
     }
 }
