@@ -25,6 +25,8 @@ public class StudentService {
 
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    private int index = 0;
+
     public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -137,21 +139,26 @@ public class StudentService {
         }).start();
     }
 
-    public synchronized void printSynchronizedNames(){
+    public void printSynchronizedNames(){
 
-        List<Student> names =studentRepository.findAll();
+        List<String> names = studentRepository.findAll().stream().map(Student::getName).collect(Collectors.toList());
 
-        System.out.println(names.get(0).getName());
-        System.out.println(names.get(1).getName());
+        printSync(names);
+        printSync(names);
 
         new Thread(() -> {
-            System.out.println(names.get(2).getName());
-            System.out.println(names.get(3).getName());
+            printSync(names);
+            printSync(names);
         }).start();
 
         new Thread(() -> {
-            System.out.println(names.get(4).getName());
-            System.out.println(names.get(5).getName());
+            printSync(names);
+            printSync(names);
         }).start();
+    }
+
+    private synchronized void printSync(List<String> studentsName) {
+        System.out.println(studentsName.get(index % 6));
+        index++;
     }
 }
